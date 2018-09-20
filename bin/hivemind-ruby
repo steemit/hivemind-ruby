@@ -1,0 +1,31 @@
+#!/usr/bin/env ruby
+
+require 'hive'
+
+config = Hive::Base.connection_config.dup
+config[:password] = '*' * 8
+
+puts "hivemind-ruby-#{Hive::VERSION}"
+
+puts "Database config:"
+config.each do |k, v|
+  puts "\t#{k}: #{v}"
+end
+
+case ARGV[0]
+when 'console' then exec 'irb -r hive -I #{__FILE__}/../lib'
+else
+  last_block = begin
+    Hive::Block.last
+  rescue => e
+    puts e.inspect
+    exit
+  end
+
+  puts "Totals synced so far:"
+  puts "\tBlocks: #{last_block.num} (#{last_block.created_at})"
+  puts "\tAccounts: #{Hive::Account.count}"
+  puts "\tPosts: #{Hive::Post.count}"
+  puts "\tReblogs: #{Hive::Reblog.count}"
+  puts "\tFollows: #{Hive::Follow.count}"
+end
