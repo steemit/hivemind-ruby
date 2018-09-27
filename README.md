@@ -58,6 +58,20 @@ The hivemind-ruby gem is compatible with Ruby 2.2.5 or later.  Also targets [Act
 
 First, you need your own [`hivemind`](https://github.com/steemit/hivemind) node.  A `hivemind` node requires at least 310GB of HDD storage for the database (as of August of 2018).
 
+Also install the minimal set of `PostgreSQL` binaries and headers requried for building 3rd-party applications:
+
+### Linux
+
+```bash
+$ apt-get install libpq-dev
+```
+
+### macOS
+
+Should already be provided if you have `PostgreSQL` provided by homebrew.
+
+### Verify psql
+
 Once it's running and all synced, just make sure you can access Postgres locally, e.g.:
 
 ```bash
